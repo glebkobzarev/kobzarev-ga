@@ -4,12 +4,16 @@ from django.db import models
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 761f8fac9ce22fdea80e4ba390301800017b8f42
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()\
  .filter(status=Post.Status.PUBLISHED)
+<<<<<<< HEAD
     
 class Post(models.Model):
     
@@ -17,6 +21,13 @@ class Post(models.Model):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
      
+=======
+
+class Post(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = 'DF', 'Draft'
+        PUBLISHED = 'PB', 'Published'
+>>>>>>> 761f8fac9ce22fdea80e4ba390301800017b8f42
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250)
     author = models.ForeignKey(User,
@@ -31,6 +42,7 @@ class Post(models.Model):
     default=Status.DRAFT)
     objects = models.Manager()
     published = PublishedManager()
+<<<<<<< HEAD
  
 class Meta:
  ordering = ['-publish']
@@ -56,3 +68,13 @@ class Comment(models.Model):
         return f'Comment by {self.name} on {self.post}'
 
  
+=======
+
+class Meta:
+    ordering = ['-publish']
+    indexes = [
+ models.Index(fields=['-publish']),
+ ]
+    def __str__(self):
+        return self.title
+>>>>>>> 761f8fac9ce22fdea80e4ba390301800017b8f42
